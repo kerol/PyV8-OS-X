@@ -608,7 +608,7 @@ if hasattr(_PyV8, 'AstScope'):
             print >>self.out, "function ", func.name, "(",
 
             for i in range(func.scope.num_parameters):
-                if i > 0: print ", ",
+                if i > 0: print(", "),
 
                 print >>self.out, func.scope.parameter(i).name
 
