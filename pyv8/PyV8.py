@@ -7,7 +7,10 @@ import sys, os
 try:
     from cStringIO import StringIO
 except ImportError:
-    from StringIO import StringIO
+    try:
+        from StringIO import StringIO
+    except ImportError:
+        from io import StringIO
 
 try:
     import json
@@ -734,7 +737,7 @@ class TestContext(unittest.TestCase):
 
             self.assertEquals(3, int(env1.eval("prop")))
 
-            print env1.eval("env1")
+            print(env1.eval("env1"))
 
             with env2:
                 self.assertEquals(3, int(env2.eval("this.env1.prop")))
@@ -902,7 +905,7 @@ class TestWrapper(unittest.TestCase):
 
                         hello();""", "test", 10, 10).run()
                     self.fail()
-                except JSError, e:
+                except JSError as e:
                     self.assert_(str(e).startswith('JSError: Error: hello world ( test @ 14 : 34 )  ->'))
                     self.assertEqual("Error", e.name)
                     self.assertEqual("hello world", e.message)
@@ -1662,7 +1665,7 @@ if __name__ == '__main__':
 
     if "-p" in sys.argv:
         sys.argv.remove("-p")
-        print "Press any key to continue..."
+        print("Press any key to continue...")
         raw_input()
 
     logging.basicConfig(level=level, format='%(asctime)s %(levelname)s %(message)s')
